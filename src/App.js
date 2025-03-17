@@ -55,7 +55,7 @@ const App = () => {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center text-primary">Driver Trip Management</h1>
+            <h1 className="text-center text-primary">Amin Logistics Driver Trips</h1>
 
             {/* Upload CSV */}
             <div className="card p-4 my-4 shadow-sm">
@@ -83,8 +83,8 @@ const App = () => {
                 <select onChange={(e) => setStatus(e.target.value)} className="form-select mb-3">
                     <option value="">All</option>
                     <option value="Completed">Completed</option>
-                    <option value="Cancelled">Cancelled</option>
-                    <option value="No Show">No Show</option>
+                    <option value="Canceled">Canceled</option>
+                    <option value="NoShow">NoShow</option>
                 </select>
                 <button onClick={fetchTrips} className="btn btn-success w-100">Search</button>
             </div>
