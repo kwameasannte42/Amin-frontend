@@ -72,11 +72,11 @@ const App = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
+                        <input type="date" placeholder="Start Date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
                             className="form-control" />
                     </div>
                     <div className="col-md-6 mb-3">
-                        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
+                        <input type="date" placeholder="End Date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
                             className="form-control" />
                     </div>
                 </div>
