@@ -59,12 +59,12 @@ const App = () => {
     <div className="container mt-5">
       <h1 className="text-center text-primary">Amin Logistics Driver Trips</h1>
 
-      {/* Upload CSV
+      {/* Upload CSV */}
             <div className="card p-4 my-4 shadow-sm">
                 <input type="file" accept=".csv" onChange={handleFileChange} className="form-control mb-2" />
                 <button onClick={uploadFile} className="btn btn-primary">Upload CSV</button>
                 {message && <p className="text-success mt-2">{message}</p>}
-            </div> */}
+            </div>
 
       {/* Search Filters */}
       <div className="card p-4 my-4 shadow-sm">
