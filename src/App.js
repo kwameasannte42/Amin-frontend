@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import TripTable from "./components/TripTable";
 
+// ✅ Automatically use the correct backend URL
+const API_URL = process.env.NODE_ENV === "development"
+    ? "http://localhost:5001"
+    : "https://amin-backend.onrender.com";
+
 const App = () => {
     const [driverName, setDriverName] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -11,15 +16,11 @@ const App = () => {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState("");
 
+    // ✅ Fetch trips with filters
     const fetchTrips = async () => {
         try {
-            const response = await axios.get("https://amin-backend.onrender.com/trips", {
-                params: {
-                    driverName,
-                    startDate,
-                    endDate,
-                    status
-                }
+            const response = await axios.get(`${API_URL}/trips`, {
+                params: { driverName, startDate, endDate, status },
             });
             setTrips(response.data);
         } catch (error) {
@@ -28,10 +29,12 @@ const App = () => {
         }
     };
 
+    // ✅ Handle file selection
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
 
+    // ✅ Upload CSV file
     const uploadFile = async () => {
         if (!file) {
             alert("Please select a CSV file.");
@@ -42,7 +45,7 @@ const App = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post("https://amin-backend.onrender.com/upload", formData, {
+            const response = await axios.post(`${API_URL}/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setMessage(response.data.message);
@@ -59,34 +62,61 @@ const App = () => {
 
             {/* Upload CSV */}
             <div className="card p-4 my-4 shadow-sm">
-                <input type="file" accept=".csv" onChange={handleFileChange} className="form-control mb-2" />
-                <button onClick={uploadFile} className="btn btn-primary">Upload CSV</button>
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileChange}
+                    className="form-control mb-2"
+                />
+                <button onClick={uploadFile} className="btn btn-primary">
+                    Upload CSV
+                </button>
                 {message && <p className="text-success mt-2">{message}</p>}
             </div>
 
             {/* Search Filters */}
             <div className="card p-4 my-4 shadow-sm">
                 <div className="mb-3">
-                    <input type="text" placeholder="Enter driver name" value={driverName} onChange={(e) => setDriverName(e.target.value)}
-                        className="form-control" />
+                    <input
+                        type="text"
+                        placeholder="Enter driver name"
+                        value={driverName}
+                        onChange={(e) => setDriverName(e.target.value)}
+                        className="form-control"
+                    />
                 </div>
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <input type="date" placeholder="Start Date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
-                            className="form-control" />
+                        <input
+                            type="date"
+                            placeholder="Start Date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="form-control"
+                        />
                     </div>
                     <div className="col-md-6 mb-3">
-                        <input type="date" placeholder="End Date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
-                            className="form-control" />
+                        <input
+                            type="date"
+                            placeholder="End Date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="form-control"
+                        />
                     </div>
                 </div>
-                <select onChange={(e) => setStatus(e.target.value)} className="form-select mb-3">
+                <select
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="form-select mb-3"
+                >
                     <option value="">All</option>
                     <option value="Completed">Completed</option>
-                    <option value="Canceled">Canceled</option>
-                    <option value="NoShow">NoShow</option>
+                    <option value="Canceled">Cancelled</option>
+                    <option value="NoShow">No Show</option>
                 </select>
-                <button onClick={fetchTrips} className="btn btn-success w-100">Search</button>
+                <button onClick={fetchTrips} className="btn btn-success w-100">
+                    Search
+                </button>
             </div>
 
             <TripTable trips={trips} />
