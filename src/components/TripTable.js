@@ -15,11 +15,18 @@ const TripTable = ({ trips }) => {
 
     const totalMileage = trips.reduce((sum, trip) => sum + parseFloat(trip["Miles"] || 0), 0);
     // const totalDriversPay = trips.reduce((sum, trip) => sum + calculateDriversPay(parseFloat(trip["Miles"] || 0)), 0);
+     // ✅ Count trips where Status is "Completed" or "No Show"
+     const totalTripsCompleted = trips.filter(trip => 
+        trip.Status.toLowerCase() === "completed" || trip.Status.toLowerCase() === "noshow"
+    ).length;
 
     return (
         <div className="container mt-4">
             <h2 className="text-secondary">Total Mileage: <span className="text-success">{totalMileage.toFixed(2)}</span></h2>
             {/* <h3 className="text-secondary">Total Driver's Pay: <span className="text-success">${totalDriversPay.toFixed(2)}</span></h3> */}
+            <h3 className="text-secondary">
+                Trips Completed + No Shows: <span className="text-success">{totalTripsCompleted}</span>
+            </h3>
 
             <div className="table-responsive">
                 <table className="table table-bordered table-hover mt-3">

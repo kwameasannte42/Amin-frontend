@@ -4,6 +4,10 @@ import TripTable from "./components/TripTable";
 
 // ✅ Automatically use the correct backend URL
 const API_URL = "https://amin-backend.onrender.com";
+// const API_URL = process.env.NODE_ENV === "development"
+//     ? "http://localhost:5001"
+//     : "https://amin-backend.onrender.com";
+
 
 
 const App = () => {
