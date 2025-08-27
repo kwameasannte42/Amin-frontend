@@ -36,7 +36,7 @@ const TripTable = ({ trips }) => {
                             <th>Driver Name</th>
                             <th>Trip Status</th>
                             <th>Miles</th>
-                            <th>Driver’s Pay</th>
+                            <th>Driver’s Pay Rate</th>
                         </tr>
                     </thead>
                     <tbody>
