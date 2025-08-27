@@ -4,11 +4,11 @@ const TripTable = ({ trips }) => {
     const calculateDriversPay = (miles) => {
         let payRate;
         if (miles <= 15) {
-            payRate = 42;
+            payRate = 38.50;
         } else if (miles > 15 && miles <= 25) {
-            payRate = 42 + (miles - 15) * 1.9;
+            payRate = 38.50 + (miles - 15) * 1.8;
         } else {
-            payRate = 42 + (10 * 1.9) + ((miles - 25) * 1.4);
+            payRate = 38.50 + (10 * 1.8) + ((miles - 25) * 1.4);
         }
         return payRate * 0.87; // Driver's Pay (87% of Pay Rate)
     };
