@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-image: url("./logo/logo.png"); /* Replace 'your-logo.png' with the path to your logo */
+
 }
 
 .App-logo {

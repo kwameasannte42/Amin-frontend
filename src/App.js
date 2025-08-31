@@ -78,7 +78,7 @@ const App = () => {
                     <option value="Canceled">Cancelled</option>
                     <option value="NoShow">No Show</option>
                 </select>
-                <button onClick={fetchTrips} className="btn btn-success w-100">
+                <button onClick={fetchTrips} className="btn btn-primary w-100">
                     Search
                 </button>
             </div>
