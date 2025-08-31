@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import TripTable from "./components/TripTable";
+import "./App.css";
 
 // ✅ Automatically use the correct backend URL
 const API_URL = "https://amin-backend.onrender.com";
@@ -33,7 +34,7 @@ const App = () => {
     
 
     return (
-        
+        <div className="position-relative" style={{ zIndex: 1 }}>
         <div className="container mt-5">
             <h1 className="text-center text-primary">Amin Logistics Driver Trips</h1>
 
@@ -82,6 +83,7 @@ const App = () => {
                 <button onClick={fetchTrips} className="btn btn-primary w-100">
                     Search
                 </button>
+            </div>
             </div>
 
             <TripTable trips={trips} />
