@@ -1,6 +1,21 @@
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-size: 300px;
+  opacity: 0.05; /* adjust for visibility */
+  z-index: 0;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+}
+
 .App {
   text-align: center;
-  background-image: url("./logo/logo.png"); /* Replace 'your-logo.png' with the path to your logo */
 
 }
 
