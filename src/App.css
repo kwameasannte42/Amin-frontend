@@ -8,6 +8,7 @@ body::before {
   background-repeat: no-repeat;
   opacity: 0.8; /* adjust for visibility */
   z-index: 0;
+  background-size: cover;
   pointer-events: none;
 }
 
