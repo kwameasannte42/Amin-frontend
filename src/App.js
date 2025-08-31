@@ -5,8 +5,8 @@ import TripTable from "./components/TripTable";
 // ✅ Automatically use the correct backend URL
 const API_URL = "https://amin-backend.onrender.com";
 // const API_URL = process.env.NODE_ENV === "development"
-//     ? "http://localhost:5001"
-//     : "https://amin-backend.onrender.com";
+    // ? "http://localhost:5001"
+    // : "https://amin-backend.onrender.com";
 
 
 
@@ -16,8 +16,6 @@ const App = () => {
     const [endDate, setEndDate] = useState("");
     const [status, setStatus] = useState("");
     const [trips, setTrips] = useState([]);
-    const [file, setFile] = useState(null);
-    const [message, setMessage] = useState("");
 
     // ✅ Fetch trips with filters
     const fetchTrips = async () => {
@@ -32,50 +30,13 @@ const App = () => {
         }
     };
 
-    // ✅ Handle file selection
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    // ✅ Upload CSV file
-    const uploadFile = async () => {
-        if (!file) {
-            alert("Please select a CSV file.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const response = await axios.post(`${API_URL}/upload`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            setMessage(response.data.message);
-            setFile(null);
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            alert("File upload failed.");
-        }
-    };
+    
 
     return (
         <div className="container mt-5">
             <h1 className="text-center text-primary">Amin Logistics Driver Trips</h1>
 
-            {/* Upload CSV */}
-            <div className="card p-4 my-4 shadow-sm">
-                <input
-                    type="file"
-                    accept=".csv"
-                    onChange={handleFileChange}
-                    className="form-control mb-2"
-                />
-                <button onClick={uploadFile} className="btn btn-primary">
-                    Upload CSV
-                </button>
-                {message && <p className="text-success mt-2">{message}</p>}
-            </div>
+            
 
             {/* Search Filters */}
             <div className="card p-4 my-4 shadow-sm">

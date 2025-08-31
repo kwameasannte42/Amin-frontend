@@ -1,65 +1,91 @@
 import React from "react";
 
 const TripTable = ({ trips }) => {
-    const calculateDriversPay = (miles) => {
-        let payRate;
+    if (!trips || !trips.trips || !Array.isArray(trips.trips)) {
+        return <p className="text-center">No trips to display yet.</p>;
+    }
+
+    const { trips: tripList } = trips;
+
+    const calculateRate = (miles) => {
+        let totalRate = 0;
         if (miles <= 15) {
-            payRate = 38.50;
-        } else if (miles > 15 && miles <= 25) {
-            payRate = 38.50 + (miles - 15) * 1.8;
+            totalRate = 38.5;
+        } else if (miles <= 25) {
+            totalRate = 38.5 + (miles - 15) * 1.8;
         } else {
-            payRate = 38.50 + (10 * 1.8) + ((miles - 25) * 1.4);
+            totalRate = 38.5 + 10 * 1.8 + (miles - 25) * 1.4;
         }
-        return payRate * 0.87; // Driver's Pay (87% of Pay Rate)
+        return totalRate * 0.87;
     };
 
-    const totalMileage = trips.reduce((sum, trip) => sum + parseFloat(trip["Miles"] || 0), 0);
-    // const totalDriversPay = trips.reduce((sum, trip) => sum + calculateDriversPay(parseFloat(trip["Miles"] || 0)), 0);
-     // ✅ Count trips where Status is "Completed" or "No Show"
-     const totalTripsCompleted = trips.filter(trip => 
-        trip.Status.toLowerCase() === "completed" || trip.Status.toLowerCase() === "noshow"
-    ).length;
+    // ✅ Filter out canceled trips
+    const filteredTrips = tripList.filter(
+        (t) => t.status?.toLowerCase() !== "canceled" && t.status?.toLowerCase() !== "cancel"
+    );
+
+    // ✅ Compute totals
+    let totalMileage = 0;
+    let totalRate = 0;
+    let completedTrips = 0;
+
+    filteredTrips.forEach((t) => {
+        const miles = parseFloat(t.miles) || 0;
+        const rate = calculateRate(miles);
+
+        totalMileage += miles;
+        totalRate += rate;
+
+        const status = t.status?.toLowerCase();
+        if (status === "completed" || status === "noshow") {
+            completedTrips++;
+        }
+    });
 
     return (
-        <div className="container mt-4">
-            <h2 className="text-secondary">Total Mileage: <span className="text-success">{totalMileage.toFixed(2)}</span></h2>
-            {/* <h3 className="text-secondary">Total Driver's Pay: <span className="text-success">${totalDriversPay.toFixed(2)}</span></h3> */}
-            <h3 className="text-secondary">
-                Trips Completed + No Shows: <span className="text-success">{totalTripsCompleted}</span>
-            </h3>
+        <div className="card p-4 shadow-sm mb-5">
+            <h5 className="mb-3">Trip Results</h5>
+
+            <div className="d-flex justify-content-between mb-3">
+                <strong>Total Mileage: {totalMileage.toFixed(2)}</strong>
+                <strong>Completed Trips: {completedTrips}</strong>
+                <strong>Total Rate: ${totalRate.toFixed(2)}</strong>
+            </div>
 
             <div className="table-responsive">
-                <table className="table table-bordered table-hover mt-3">
-                    <thead className="table-primary">
+                <table className="table table-striped table-bordered">
+                    <thead className="table-light">
                         <tr>
                             <th>Date</th>
-                            <th>Driver Name</th>
-                            <th>Trip Status</th>
+                            <th>Driver</th>
+                            <th>SR Name</th>
                             <th>Miles</th>
-                            <th>Driver’s Pay Rate</th>
+                            <th>Status</th>
+                            <th>Rate</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {trips.length > 0 ? (
-                            trips.map((trip, index) => {
-                                const miles = parseFloat(trip["Miles"] || 0);
-                                const driversPay = calculateDriversPay(miles);
-
-                                return (
-                                    <tr key={index}>
-                                        <td>{trip.Date}</td>
-                                        <td>{trip["Driver Name"]}</td>
-                                        <td>{trip.Status}</td>
-                                        <td>{miles.toFixed(2)}</td>
-                                        <td>${driversPay.toFixed(2)}</td>
-                                    </tr>
-                                );
-                            })
-                        ) : (
-                            <tr>
-                                <td colSpan="5" className="text-center text-muted py-3">No trips found.</td>
-                            </tr>
-                        )}
+                        {filteredTrips.map((trip, index) => {
+                            const miles = parseFloat(trip.miles) || 0;
+                            const rate = calculateRate(miles);
+                            return (
+                                <tr key={index}>
+                                    <td>{trip.trip_date}</td>
+                                    <td>{trip.driver_name}</td>
+                                    <td>{trip.sr_name}</td>
+                                    <td>{miles}</td>
+                                    <td>{trip.status}</td>
+                                    <td>${rate.toFixed(2)}</td>
+                                </tr>
+                            );
+                        })}
+                        {/* Total Row */}
+                        <tr className="fw-bold bg-light">
+                            <td colSpan="3" className="text-end">Total:</td>
+                            <td>{totalMileage.toFixed(2)}</td>
+                            <td>{completedTrips} trips</td>
+                            <td>${totalRate.toFixed(2)}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
