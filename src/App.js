@@ -36,7 +36,7 @@ const App = () => {
           <img
             src="/logo.png"
             alt="Amin Logistics Logo"
-            style={{ maxHeight: "80px" }}
+            style={{ maxHeight: "400px" }}
           />
         </div>
 
