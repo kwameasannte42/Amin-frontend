@@ -12,9 +12,9 @@ const TripTable = ({ trips }) => {
         if (miles <= 15) {
             totalRate = 38.5;
         } else if (miles <= 25) {
-            totalRate = 38.5 + (miles - 15) * 1.8;
+            totalRate = 38.5 + (miles - 15) * 1.5;
         } else {
-            totalRate = 38.5 + 10 * 1.8 + (miles - 25) * 1.4;
+            totalRate = 38.5 + 10 * 1.5 + (miles - 25) * 1.3;
         }
         return totalRate * 0.87;
     };
